@@ -13,9 +13,13 @@ export default class extends Component {
 
     render() {
         const mainStyle = {
+            "border": "solid 1px #000",
+            "display": "inline-block",
+            marginLeft: "30px"
+        };
+
+        const activeStyle = { //todo: multiple classes instead of dup styles
             "border": "solid 3px #000",
-            //"float": "left",
-            //"clear": "left",
             "display": "inline-block",
             marginLeft: "30px"
         };
@@ -26,7 +30,7 @@ export default class extends Component {
         }
 
         return(
-            <div style={mainStyle}>
+            <div style={this.props.isActive ? activeStyle : mainStyle}>
                 {this.props.keyArray.map((curKeyRow, curVIndex) => 
                     <div style={rowStyle} >
                     { curKeyRow.map((curKeyValue, curHIndex) =>
