@@ -50,8 +50,16 @@ export default class extends Component {
 
     return (
       <Layout>
+        <h1>Welcome to my on-screen keyboard!</h1>
         <p>
-          This is the home page!
+          <br />
+          use W, A, S, D to control the left keyboard.
+          <br />
+          <br />
+          use I, J, K, L to control the right keyboard.
+          <br />
+          <br />
+          use space to select a key.
         </p>
 
         <textarea onKeyPress={this.handleKeyPress(this)} value={this.state.textEntered} />
