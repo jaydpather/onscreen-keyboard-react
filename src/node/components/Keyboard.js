@@ -13,7 +13,7 @@ export default class extends Component {
     }
 
     setActiveKeyboard(self, physicalKeyPressed) {
-        isLeftKey = physicalKeyPressed == 'w' || physicalKeyPressed == 'a' || physicalKeyPressed == 's' || physicalKeyPressed == 'd';
+        let isLeftKey = physicalKeyPressed == 'w' || physicalKeyPressed == 'a' || physicalKeyPressed == 's' || physicalKeyPressed == 'd';
         self.setState({
             isLeftKeyboardActive: isLeftKey
         });
@@ -26,6 +26,9 @@ export default class extends Component {
         else if(keyChar == "d" || keyChar == "l") {
             return 1;
         }
+        else {
+            return 0;
+        }
     }
 
     getVDelta = (keyChar) => {
@@ -34,6 +37,9 @@ export default class extends Component {
         }
         else if(keyChar == "s" || keyChar == "k") {
             return 1;
+        }
+        else {
+            return 0;
         }
     }
 
@@ -47,6 +53,7 @@ export default class extends Component {
             }
             else
             {
+                self.setActiveKeyboard(self, keyChar);
                 let hDelta = self.getHDelta(keyChar);
                 let vDelta = self.getVDelta(keyChar);
                 if(self.state.isLeftKeyboardActive)

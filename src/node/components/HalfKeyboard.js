@@ -10,7 +10,8 @@ export default class extends Component {
     };
 
     changeSelection(hDelta, vDelta){
-
+        //alert("halfKeyboard.changeSelection: " + hDelta + ", " + vDelta);
+        
     }
 
     render() {
