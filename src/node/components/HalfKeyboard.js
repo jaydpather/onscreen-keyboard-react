@@ -33,7 +33,8 @@ export default class extends Component {
 
     render() {
         this.props.onRender({ 
-            changeSelectionFn: this.changeSelection(this)
+            changeSelectionFn: this.changeSelection(this),
+            halfKeyboardState: this.state
         });
 
         const mainStyle = {

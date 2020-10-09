@@ -12,6 +12,27 @@ export default class extends Component {
         rightKeyboardChangeSelectionFn: () => { }
     }
 
+    keyboardStates = {
+        leftKeyboardState: null,
+        rightKeyboardState: null,
+    }
+
+    _leftKeyArray = [
+        [' ', 'j', 'b', '.', ','],
+        [' ', 'h', 'e', 'l', '"'],
+        ['x', 'n', ' ', 'r', 'y'],
+        [' ', 'p', 'o', 'u', ' '],
+        [' ', ' ', 'k', ' ', ' '],
+    ];
+  
+    _rightKeyArray = [
+        [' ', 'q', 'f', ' ', ' '],
+        [' ', 'g', 'a', 'c', ' '],
+        ['z', 's', ' ', 'i', 'w'],
+        [' ', 'm', 't', 'd', ' '],
+        [' ', ' ', 'v', ' ', ' '],
+    ];
+
     setActiveKeyboard(self, physicalKeyPressed) {
         let newValue = self.state.isLeftKeyboardActive;
 
@@ -64,7 +85,12 @@ export default class extends Component {
             //todo: handle space
             //temp: just calling left keyboard by default for now
             if(keyChar == " "){
-                //todo: select active key on active keyboard
+                
+                let keyArray = self.state.isLeftKeyboardActive ? self._leftKeyArray : self._rightKeyArray;
+                let keyboardState = self.state.isLeftKeyboardActive ? self.keyboardStates.leftKeyboardState : self.keyboardStates.rightKeyboardState;
+
+                let virtualKeyValue = keyArray[keyboardState.VIndex][keyboardState.HIndex];
+                self.props.onVirtualKeySelected(virtualKeyValue);
             }
             else
             {
@@ -86,33 +112,21 @@ export default class extends Component {
     leftKeyboardOnRender(self){
         return function(halfKeyboardInfo){
             self.selectionFunctions.leftKeyboardChangeSelectionFn = halfKeyboardInfo.changeSelectionFn;
+            self.keyboardStates.leftKeyboardState = halfKeyboardInfo.halfKeyboardState;
         }   
     }
 
     rightKeyboardOnRender(self){
         return function(halfKeyboardInfo){
             self.selectionFunctions.rightKeyboardChangeSelectionFn = halfKeyboardInfo.changeSelectionFn;
+            self.keyboardStates.rightKeyboardState = halfKeyboardInfo.halfKeyboardState;
         }   
     }
 
     render() {
         this.props.onRender({onPhysicalKeyPressed: this.onPhysicalKeyPressed(this)});
 
-        let leftKeyArray = [
-            [' ', 'j', 'b', '.', ','],
-            [' ', 'h', 'e', 'l', '"'],
-            ['x', 'n', ' ', 'r', 'y'],
-            [' ', 'p', 'o', 'u', ' '],
-            [' ', ' ', 'k', ' ', ' '],
-          ];
-      
-          let rightKeyArray = [
-            [' ', 'q', 'f', ' ', ' '],
-            [' ', 'g', 'a', 'c', ' '],
-            ['z', 's', ' ', 'i', 'w'],
-            [' ', 'm', 't', 'd', ' '],
-            [' ', ' ', 'v', ' ', ' '],
-          ];
+        
 
         const mainStyle = {
             "border": "solid 3px #00f",
@@ -120,8 +134,8 @@ export default class extends Component {
 
         return(
             <div style={mainStyle}>
-                <HalfKeyboard keyArray={leftKeyArray} isActive={this.state.isLeftKeyboardActive} onRender={this.leftKeyboardOnRender(this)} />
-                <HalfKeyboard keyArray={rightKeyArray} isActive={!this.state.isLeftKeyboardActive} onRender={this.rightKeyboardOnRender(this)} />    
+                <HalfKeyboard keyArray={this._leftKeyArray} isActive={this.state.isLeftKeyboardActive} onRender={this.leftKeyboardOnRender(this)} />
+                <HalfKeyboard keyArray={this._rightKeyArray} isActive={!this.state.isLeftKeyboardActive} onRender={this.rightKeyboardOnRender(this)} />    
             </div>
         );
     }

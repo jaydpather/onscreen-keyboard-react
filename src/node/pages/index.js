@@ -14,6 +14,10 @@ export default class extends Component {
     return {};
   }
 
+  state = {
+    textEntered: ""
+  }
+
   eventHandlers = {
     onPhysicalKeyPressed: () => { }
   }
@@ -33,6 +37,14 @@ export default class extends Component {
     };
   }
 
+  onVirtualKeySelected(self) {
+    return function(virtualKeyPressed){
+      self.setState({
+        textEntered: self.state.textEntered + virtualKeyPressed
+      });
+    };
+  }
+
   render () {
     console.log("rendering") //todo: why do we see this log message on both server and console when doing SSR?
 
@@ -42,10 +54,10 @@ export default class extends Component {
           This is the home page!
         </p>
 
-        <textarea onKeyPress={this.handleKeyPress(this)} />
+        <textarea onKeyPress={this.handleKeyPress(this)} value={this.state.textEntered} />
         <br />
         <br />
-        <Keyboard ref="keyboard" isLeftKeyboardActive={ false } onRender={this.keyboardOnRender(this)} />
+        <Keyboard ref="keyboard" isLeftKeyboardActive={ false } onRender={this.keyboardOnRender(this)} onVirtualKeySelected={this.onVirtualKeySelected(this)} />
 
 
       </Layout>
