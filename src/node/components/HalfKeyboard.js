@@ -4,7 +4,10 @@ import Key from '../components/Key';
 
 
 export default class extends Component {
-    state = { };
+    state = { 
+        HIndex: 2,
+        VIndex: 2,
+    };
 
 
 
@@ -24,10 +27,10 @@ export default class extends Component {
 
         return(
             <div style={mainStyle}>
-                {this.props.keyArray.map(curKeyRow => 
+                {this.props.keyArray.map((curKeyRow, curVIndex) => 
                     <div style={rowStyle} >
-                    { curKeyRow.map(curKeyValue =>
-                        <Key keyValue={curKeyValue} />
+                    { curKeyRow.map((curKeyValue, curHIndex) =>
+                        <Key keyValue={curKeyValue} isActiveKey={ this.state.HIndex == curHIndex && this.state.VIndex == curVIndex } />
                     )}
                     </div>
                 )}

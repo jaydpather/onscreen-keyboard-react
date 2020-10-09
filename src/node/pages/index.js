@@ -18,15 +18,19 @@ export default class extends Component {
     console.log("rendering") //todo: why do we see this log message on both server and console when doing SSR?
 
     let leftKeyArray = [
-      ['o', 'e', 'u'],
-      ['r', ' ', 'a'],
-      ['s', 'i', 't'],
+      [' ', 'j', 'b', '.', ','],
+      [' ', 'h', 'e', 'l', '"'],
+      ['x', 'n', ' ', 'r', 'y'],
+      [' ', 'p', 'o', 'u', ' '],
+      [' ', ' ', 'k', ' ', ' '],
     ];
 
     let rightKeyArray = [
-      ['z', 'q', 'x'],
-      ['g', ' ', 'f'],
-      ['j', 'k', 'l'],
+      [' ', 'q', 'f', ' ', ' '],
+      [' ', 'g', 'a', 'c', ' '],
+      ['z', 's', ' ', 'i', 'w'],
+      [' ', 'm', 't', 'd', ' '],
+      [' ', ' ', 'v', ' ', ' '],
     ];
 
     return (
