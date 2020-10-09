@@ -9,14 +9,31 @@ export default class extends Component {
         VIndex: 2,
     };
 
-    changeSelection(hDelta, vDelta){
+    clamp(value, min, max){
+        if(value < min){
+            return min;
+        }else if(value > max){
+            return max;
+        }else{
+            return value;
+        }
+    }
+
+    changeSelection(self){
+        return function(hDelta, vDelta){
         //alert("halfKeyboard.changeSelection: " + hDelta + ", " + vDelta);
-        
+            let newHIndex = self.clamp(self.state.HIndex + hDelta, 0, 4);
+            let newVIndex = self.clamp(self.state.VIndex + vDelta, 0, 4);
+            self.setState({
+                HIndex: newHIndex,
+                VIndex: newVIndex
+            });
+        }
     }
 
     render() {
         this.props.onRender({ 
-            changeSelectionFn: this.changeSelection 
+            changeSelectionFn: this.changeSelection(this)
         });
 
         const mainStyle = {

@@ -15,7 +15,7 @@ export default class extends Component {
     setActiveKeyboard(self, physicalKeyPressed) {
         let newValue = self.state.isLeftKeyboardActive;
 
-        alert(physicalKeyPressed);
+        //alert(physicalKeyPressed);
         
         let isLeftKey = physicalKeyPressed == 'w' || physicalKeyPressed == 'a' || physicalKeyPressed == 's' || physicalKeyPressed == 'd';
         if(isLeftKey)
@@ -29,6 +29,8 @@ export default class extends Component {
         self.setState({
             isLeftKeyboardActive: newValue
         });
+
+        return newValue;
         
     }
 
@@ -66,10 +68,10 @@ export default class extends Component {
             }
             else
             {
-                self.setActiveKeyboard(self, keyChar);
+                let isLeftKeyboardActive = self.setActiveKeyboard(self, keyChar);
                 let hDelta = self.getHDelta(keyChar);
                 let vDelta = self.getVDelta(keyChar);
-                if(self.state.isLeftKeyboardActive)
+                if(isLeftKeyboardActive)
                 {
                     self.selectionFunctions.leftKeyboardChangeSelectionFn(hDelta, vDelta);
                 }
