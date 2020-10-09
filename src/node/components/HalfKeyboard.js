@@ -31,10 +31,20 @@ export default class extends Component {
         }
     }
 
+    resetState(self){
+        return function(){
+            self.setState({
+                HIndex: 2,
+                VIndex: 2 //todo: don't hardcode!
+            });
+        }
+    }
+
     render() {
         this.props.onRender({ 
             changeSelectionFn: this.changeSelection(this),
-            halfKeyboardState: this.state
+            halfKeyboardState: this.state,
+            resetStateFn: this.resetState(this)
         });
 
         const mainStyle = {

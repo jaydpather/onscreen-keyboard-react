@@ -17,6 +17,11 @@ export default class extends Component {
         rightKeyboardState: null,
     }
 
+    resetFunctions = {
+        leftKeyboardResetFunction: null,
+        rightKeyboardResetFunction: null
+    }
+
     _leftKeyArray = [
         [' ', 'j', 'b', '.', ','],
         [' ', 'h', 'e', 'l', '"'],
@@ -88,9 +93,12 @@ export default class extends Component {
                 
                 let keyArray = self.state.isLeftKeyboardActive ? self._leftKeyArray : self._rightKeyArray;
                 let keyboardState = self.state.isLeftKeyboardActive ? self.keyboardStates.leftKeyboardState : self.keyboardStates.rightKeyboardState;
+                let resetFn = self.state.isLeftKeyboardActive ? self.resetFunctions.leftKeyboardResetFunction : self.resetFunctions.rightKeyboardResetFunction;
 
                 let virtualKeyValue = keyArray[keyboardState.VIndex][keyboardState.HIndex];
                 self.props.onVirtualKeySelected(virtualKeyValue);
+                resetFn();
+
             }
             else
             {
@@ -113,6 +121,7 @@ export default class extends Component {
         return function(halfKeyboardInfo){
             self.selectionFunctions.leftKeyboardChangeSelectionFn = halfKeyboardInfo.changeSelectionFn;
             self.keyboardStates.leftKeyboardState = halfKeyboardInfo.halfKeyboardState;
+            self.resetFunctions.leftKeyboardResetFunction = halfKeyboardInfo.resetStateFn;
         }   
     }
 
@@ -120,6 +129,7 @@ export default class extends Component {
         return function(halfKeyboardInfo){
             self.selectionFunctions.rightKeyboardChangeSelectionFn = halfKeyboardInfo.changeSelectionFn;
             self.keyboardStates.rightKeyboardState = halfKeyboardInfo.halfKeyboardState;
+            self.resetFunctions.rightKeyboardResetFunction = halfKeyboardInfo.resetStateFn;
         }   
     }
 
