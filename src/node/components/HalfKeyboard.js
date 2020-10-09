@@ -9,9 +9,15 @@ export default class extends Component {
         VIndex: 2,
     };
 
+    changeSelection(physicalKeyPressed){
 
+    }
 
     render() {
+        this.props.onRender({ 
+            changeSelectionFn: this.changeSelection 
+        });
+
         const mainStyle = {
             "border": "solid 1px #000",
             "display": "inline-block",

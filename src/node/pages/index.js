@@ -14,9 +14,23 @@ export default class extends Component {
     return {};
   }
 
-  handleKeyPress(e){
-    e.preventDefault();
-    alert(String.fromCharCode(event.keyCode)); //todo: some browsers use charCode
+  eventHandlers = {
+    onPhysicalKeyPressed: () => { }
+  }
+
+  handleKeyPress(self){
+    return function (e){
+      e.preventDefault();
+      //alert(String.fromCharCode(event.keyCode)); //todo: some browsers use charCode
+      let physicalKeyPressed = String.fromCharCode(event.keyCode);
+      self.eventHandlers.onPhysicalKeyPressed(physicalKeyPressed);
+    };
+  }
+
+  keyboardOnRender(self) {
+    return function (keyboardInfo){
+      self.eventHandlers.onPhysicalKeyPressed = keyboardInfo.onPhysicalKeyPressed;
+    };
   }
 
   render () {
@@ -28,10 +42,10 @@ export default class extends Component {
           This is the home page!
         </p>
 
-        <textarea onKeyPress={this.handleKeyPress} />
+        <textarea onKeyPress={this.handleKeyPress(this)} />
         <br />
         <br />
-        <Keyboard isLeftKeyboardActive={ false } />
+        <Keyboard ref="keyboard" isLeftKeyboardActive={ false } onRender={this.keyboardOnRender(this)} />
 
 
       </Layout>

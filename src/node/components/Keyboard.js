@@ -3,10 +3,38 @@ import HalfKeyboard from '../components/HalfKeyboard';
 
 export default class extends Component {
     state = {
-        isLeftKeyboardActive: this.props.isLeftKeyboardActive
+        isLeftKeyboardActive: this.props.isLeftKeyboardActive,
+        
+    }
+
+    selectionFunctions = {
+        leftKeyboardChangeSelectionFn: () => { },
+        rightKeyboardChangeSelectionFn: () => { }
+    }
+
+    onPhysicalKeyPressed(self){
+        return function(keyChar) {
+            alert("keyboard component: you pressed: " + keyChar);
+            //temp: just calling left keyboard by default for now
+            self.selectionFunctions.leftKeyboardChangeSelectionFn(keyChar);
+        }
+    }
+
+    leftKeyboardOnRender(self){
+        return function(halfKeyboardInfo){
+            self.selectionFunctions.leftKeyboardChangeSelectionFn = halfKeyboardInfo.changeSelectionFn;
+        }   
+    }
+
+    rightKeyboardOnRender(self){
+        return function(halfKeyboardInfo){
+            self.selectionFunctions.rightKeyboardChangeSelectionFn = halfKeyboardInfo.changeSelectionFn;
+        }   
     }
 
     render() {
+        this.props.onRender({onPhysicalKeyPressed: this.onPhysicalKeyPressed(this)});
+
         let leftKeyArray = [
             [' ', 'j', 'b', '.', ','],
             [' ', 'h', 'e', 'l', '"'],
@@ -29,8 +57,8 @@ export default class extends Component {
 
         return(
             <div style={mainStyle}>
-                <HalfKeyboard keyArray={leftKeyArray} isActive={this.state.isLeftKeyboardActive} />
-                <HalfKeyboard keyArray={rightKeyArray} isActive={!this.state.isLeftKeyboardActive} />    
+                <HalfKeyboard keyArray={leftKeyArray} isActive={this.state.isLeftKeyboardActive} onRender={this.leftKeyboardOnRender(this)} />
+                <HalfKeyboard keyArray={rightKeyArray} isActive={!this.state.isLeftKeyboardActive} onRender={this.rightKeyboardOnRender(this)} />    
             </div>
         );
     }
