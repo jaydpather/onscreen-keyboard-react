@@ -9,7 +9,7 @@ export default class extends Component {
         VIndex: 2,
     };
 
-    changeSelection(physicalKeyPressed){
+    changeSelection(hDelta, vDelta){
 
     }
 

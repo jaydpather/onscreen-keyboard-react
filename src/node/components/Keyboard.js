@@ -12,11 +12,52 @@ export default class extends Component {
         rightKeyboardChangeSelectionFn: () => { }
     }
 
+    setActiveKeyboard(self, physicalKeyPressed) {
+        isLeftKey = physicalKeyPressed == 'w' || physicalKeyPressed == 'a' || physicalKeyPressed == 's' || physicalKeyPressed == 'd';
+        self.setState({
+            isLeftKeyboardActive: isLeftKey
+        });
+    }
+
+    getHDelta = (keyChar) => {
+        if(keyChar == "a" || keyChar == "j") {
+            return -1;
+        }
+        else if(keyChar == "d" || keyChar == "l") {
+            return 1;
+        }
+    }
+
+    getVDelta = (keyChar) => {
+        if(keyChar == "w" || keyChar == "i") {
+            return -1;
+        }
+        else if(keyChar == "s" || keyChar == "k") {
+            return 1;
+        }
+    }
+
     onPhysicalKeyPressed(self){
         return function(keyChar) {
-            alert("keyboard component: you pressed: " + keyChar);
+            //alert("keyboard component: you pressed: " + keyChar);
+            //todo: handle space
             //temp: just calling left keyboard by default for now
-            self.selectionFunctions.leftKeyboardChangeSelectionFn(keyChar);
+            if(keyChar == " "){
+                //todo: select active key on active keyboard
+            }
+            else
+            {
+                let hDelta = self.getHDelta(keyChar);
+                let vDelta = self.getVDelta(keyChar);
+                if(self.state.isLeftKeyboardActive)
+                {
+                    self.selectionFunctions.leftKeyboardChangeSelectionFn(hDelta, vDelta);
+                }
+                else
+                {
+                    self.selectionFunctions.rightKeyboardChangeSelectionFn(hDelta, vDelta);
+                }
+            }
         }
     }
 
