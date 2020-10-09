@@ -14,6 +14,11 @@ export default class extends Component {
     return {};
   }
 
+  handleKeyPress(e){
+    e.preventDefault();
+    alert(String.fromCharCode(event.keyCode)); //todo: some browsers use charCode
+  }
+
   render () {
     console.log("rendering") //todo: why do we see this log message on both server and console when doing SSR?
 
@@ -39,7 +44,7 @@ export default class extends Component {
           This is the home page!
         </p>
 
-        <Key keyValue="a" />
+        <textarea onKeyPress={this.handleKeyPress} />
         <br />
         <br />
         <div>
