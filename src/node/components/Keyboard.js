@@ -13,10 +13,23 @@ export default class extends Component {
     }
 
     setActiveKeyboard(self, physicalKeyPressed) {
+        let newValue = self.state.isLeftKeyboardActive;
+
+        alert(physicalKeyPressed);
+        
         let isLeftKey = physicalKeyPressed == 'w' || physicalKeyPressed == 'a' || physicalKeyPressed == 's' || physicalKeyPressed == 'd';
+        if(isLeftKey)
+            newValue = true;
+
+        let isRightKey = physicalKeyPressed == 'i' || physicalKeyPressed == 'j' || physicalKeyPressed == 'k' || physicalKeyPressed == 'l';
+        if(isRightKey)
+            newValue = false;
+        
+
         self.setState({
-            isLeftKeyboardActive: isLeftKey
+            isLeftKeyboardActive: newValue
         });
+        
     }
 
     getHDelta = (keyChar) => {
