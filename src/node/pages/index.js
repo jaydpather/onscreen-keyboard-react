@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import Layout from '../components/MyLayout';
+import Key from '../components/Key';
+import HalfKeyboard from '../components/HalfKeyboard';
 
 export default class extends Component {
   static async getInitialProps(ctx) {
@@ -14,11 +16,34 @@ export default class extends Component {
 
   render () {
     console.log("rendering") //todo: why do we see this log message on both server and console when doing SSR?
+
+    let leftKeyArray = [
+      ['o', 'e', 'u'],
+      ['r', ' ', 'a'],
+      ['s', 'i', 't'],
+    ];
+
+    let rightKeyArray = [
+      ['z', 'q', 'x'],
+      ['g', ' ', 'f'],
+      ['j', 'k', 'l'],
+    ];
+
     return (
       <Layout>
         <p>
           This is the home page!
         </p>
+
+        <Key keyValue="a" />
+        <br />
+        <br />
+        <div>
+          <HalfKeyboard keyArray={leftKeyArray} />
+          <HalfKeyboard keyArray={rightKeyArray} />
+        </div>
+
+
       </Layout>
     )
   }
